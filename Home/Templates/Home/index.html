@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
-<a href="{% url 'loginURL' %}" class="btn btn-danger">login</a>
-<a href="{% url 'RegisterURL' %}" class="btn btn-danger">Register</a>
-<a href="{% url 'LogoutURL' %}" class="btn btn-danger">logout</a>
-{% include 'post.html' %}
+
+{% block UserController %}
+    <div class="card card-group">
+        {% if request.user.is_authenticated %}
+            <p>{{ request.user}}</p>
+            <a href="{% url 'LogoutURL' %}" class="btn btn-danger">logout</a>
+        {% else %}
+            <a href="{% url 'LoginURL' %}" class="btn btn-success">login</a>
+            <a href="{% url 'RegisterURL' %}" class="btn btn-outline-dark">Register</a>
+        {% endif %}
+    </div>
+{% endblock %}

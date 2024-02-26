@@ -5,10 +5,20 @@
     {% load static %}
     <link rel="stylesheet" href="{% static '/css/bootstrap/bootstrap.min.css' %}">
     <title>{% block title %}{% endblock %}</title>
-
+    <style>
+        .card{
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
     {%  include 'navbar.html' %}
+    {%  include 'messages.html' %}
+    {% block registerform %}{% endblock %}
+    {% block loginform %}{% endblock %}
+    {% block UserController %}{% endblock %}
+{#    {% block post %}{% endblock %}#}
 
 </body>
 <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
