@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class UserPost(models.Model):
+class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     body = models.TextField()
     slug = models.SlugField()
@@ -18,7 +18,7 @@ class UserPost(models.Model):
         return f'{self.slug} - {self.updated}'
 
     def get_absolute_url(self):
-        return reverse('home:post_detail', args=(self.id, self.slug))
+        return reverse('Home:post_detail', args=(self.id, self.slug))
 
     def likes_count(self):
         return self.pvotes.count()
@@ -30,10 +30,9 @@ class UserPost(models.Model):
         return False
 
 
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ucomments')
-    post = models.ForeignKey(UserPost, on_delete=models.CASCADE, related_name='pcomments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='pcomments')
     reply = models.ForeignKey('self', on_delete=models.CASCADE, related_name='rcomments', blank=True, null=True)
     is_reply = models.BooleanField(default=False)
     body = models.TextField(max_length=400)
@@ -45,7 +44,7 @@ class Comment(models.Model):
 
 class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='uvotes')
-    post = models.ForeignKey(UserPost, on_delete=models.CASCADE, related_name='pvotes')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='pvotes')
 
     def __str__(self):
         return f'{self.user} liked {self.post.slug}'

@@ -9,9 +9,12 @@ from django.contrib.auth import authenticate, login, logout
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('HomeURL')
-    def post(self,request):
+        return redirect('Home:HomeURL')
+
+class ProfileView(View):
+    def get(self, request):
         pass
+
 
 class RegisterView(View):
     def get(self, request):
@@ -23,10 +26,10 @@ class RegisterView(View):
             cd = Rform.cleaned_data
             User.objects.create_user(cd['username'], cd['email'], cd['password'])
             messages.error(request, 'Register was Successfully', extra_tags='success')
-            return redirect('HomeURL')
+            return redirect('Home:HomeURL')
         else:
             messages.error(request, 'Bad request', extra_tags='danger')
-            return redirect('RegisterURL')
+            return redirect('accounts:RegisterURL')
 
 class LoginView(View):
     LoginUserform = LoginForm()
@@ -36,12 +39,11 @@ class LoginView(View):
         rform = LoginForm(request.POST)
         if rform.is_valid():
             cd = rform.cleaned_data
-            print(cd)
             ruser = authenticate(request, username=cd['username'], password=cd['password'])
             if ruser is not None:
                 login(request, ruser)
                 messages.error(request, 'Register was Successfully', extra_tags='success')
-                return redirect('HomeURL')
+                return redirect('Home:HomeURL')
             else:
                 messages.error(request, 'Username or Password was Wrong', extra_tags='danger')
                 return render(request, 'accounts/login.html', {'loginform': self.LoginUserform})

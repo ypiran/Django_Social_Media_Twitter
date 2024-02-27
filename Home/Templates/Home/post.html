@@ -1,9 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
 {% block postblock %}
     {% for post in posts %}
         <div class="card">
-            <h3>{{ post.title}}</h3>
-            <p>{{ post.body}}</p>
-            <small>{{ post.created }}|{{ post.updated }}</small>
+            <div class="card-group">
+                <label>{{ post.user.username }}</label>
+                {% if request.user.is_authenticated  %}
+                    {% if post.user.username != request.user.username%}
+                         <a href="" class="btn btn-primary">Follow</a>
+                         <a href="" class="btn btn-outline-danger">Like</a>
+                    {% else %}
+                        <a href="{% url 'Home:EditPost' post.id %}" class="btn btn-warning">Edit</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <hr>
+            <p>{{ post.body }}</p>
+            <br>
+            <small>{{ post.created }}</small>
+            <label>{{ post.like }}</label>
         </div>
     {% endfor %}
 {% endblock %}
