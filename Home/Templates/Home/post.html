@@ -6,13 +6,16 @@
             <div class="card-group">
                 <label>{{ post.user.username }}</label>
                 {% if request.user.is_authenticated  %}
+                    <a href="{% url 'Home:PostLike' post.id %}" class="btn btn-danger">Like {{ post.likes_count }}</a>
                     {% if post.user.username != request.user.username%}
                          <a href="" class="btn btn-primary">Follow</a>
-                         <a href="" class="btn btn-outline-danger">Like</a>
                     {% else %}
                         <a href="{% url 'Home:EditPost' post.id %}" class="btn btn-warning">Edit</a>
                     {% endif %}
+                {% else %}
+                    <a class="btn btn-danger">Like {{ post.likes_count }}</a>
                 {% endif %}
+                <a href="{% url 'Home:post_detail' post.id %}">View Post</a>
             </div>
             <hr>
             <p>{{ post.body }}</p>
