@@ -10,5 +10,6 @@ urlpatterns = [
     path('Delete/<int:post_id>/', DeletePostView.as_view(), name='DeletePost'),
     path('Reply/<int:post_id>/<int:comment_id>/', AddReplyPostView.as_view(), name='AddReply'),
     path('Like/<int:post_id>', LikePostView.as_view(), name='PostLike'),
-    path('Reply/<int:post_id>', AddReplyPostView.as_view(), name='Follow'),
+    path('profile/', ProfileView.as_view(), name='ProfileURL'),
+    path('DeleteComment/<int:post_id>/<int:comment_id>/', DeleteComment.as_view(), name='DeleteComment'),
 ]

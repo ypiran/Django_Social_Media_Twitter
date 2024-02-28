@@ -1,7 +1,7 @@
 <div class="card card-group">
     {% if request.user.is_authenticated %}
         <p>{{ request.user}}</p>
-        <a href="{% url 'accounts:ProfileURL' %}" class="btn btn-secondary">Profile</a>
+        <a href="{% url 'Home:ProfileURL' %}" class="btn btn-secondary">Profile</a>
         <a href="{% url 'accounts:LogoutURL' %}" class="btn btn-danger">logout</a>
         <a href="{% url 'Home:NewPostURL' %}" class="btn btn-outline-primary">+ New Post</a>
     {% else %}

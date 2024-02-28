@@ -6,7 +6,6 @@
             <label>{{ posts.user.username }}</label>
             {% if request.user.is_authenticated  %}
                 {% if posts.user.username != request.user.username%}
-                     <a href="" class="btn btn-primary">Follow</a>
                      <a href="{% url 'Home:PostLike' posts.id %}" class="{% if can_like %}disabled{% endif %} btn btn-danger">Like {{ posts.likes_count }}</a>
                 {% else %}
                     <a href="{% url 'Home:EditPost' posts.id %}" class="btn btn-warning">Edit</a>
@@ -30,7 +29,7 @@
     {% for comment in comments %}
         <div class="card bg-dark text-white">
             {% if request.user == comment.user %}
-                <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }}<a href="" class="btn btn-danger">Delete comment</a></p>
+                <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }}<a href="{% url 'Home:DeleteComment' posts.id comment.id %}" class="btn btn-danger">Delete comment</a></p>
             {% else %}
                 <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }}</p>
             {% endif %}
@@ -38,10 +37,10 @@
             <p class="card-body">{{ comment.body }}</p>
 
             {% if request.user.is_authenticated %}
-                <form action="{% url 'Home:AddReply' posts.id comment.id %}" method="post" style="display:none;">
+                <form action="{% url 'Home:AddReply' posts.id comment.id %}" method="post">
                     {% csrf_token %}
                     {{ reply_form.as_p }}
-                    <input type="submit" value="send">
+                    <input type="submit" class="btn btn-primary" value="Send Reply">
                 </form>
             {% endif %}
 

@@ -11,11 +11,6 @@ class LogoutView(View):
         logout(request)
         return redirect('Home:HomeURL')
 
-class ProfileView(View):
-    def get(self, request):
-        pass
-
-
 class RegisterView(View):
     def get(self, request):
         form = RegisterForm()
