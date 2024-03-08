@@ -13,10 +13,14 @@
                 {% else %}
                     <a class="btn btn-danger">Like {{ post.likes_count }}</a>
                 {% endif %}
-                <a href="{% url 'Home:post_detail' post.id %}">View Post</a>
+                <a class="btn btn-outline-success" href="{% url 'Home:post_detail' post.id %}">View Post</a>
             </div>
             <hr>
             <p>{{ post.body }}</p>
+            {% if post.post_image.url != Null %}
+                <br>
+                <img width="30%" src="{{ post.post_image.url }}" />
+            {% endif %}
             <br>
             <small>{{ post.created }}</small>
             <label>{{ post.like }}</label>

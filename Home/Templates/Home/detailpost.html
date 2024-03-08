@@ -14,6 +14,11 @@
         </div>
         <hr>
         <p>{{ posts.body }}</p>
+
+        {% if posts.post_image.url != Null %}
+            <br>
+            <img width="50%" src="{{ posts.post_image.url }}" />
+        {% endif %}
         <br>
         <small>{{ posts.created }}</small>
     </div>

@@ -31,6 +31,7 @@ class PostDetailView(LoginRequiredMixin, View):
         if request.user.is_authenticated and self.post_instance.user_can_like(request.user):
             can_like = True
         publishedpost = Post.objects.get(id=post_id)
+        print(publishedpost.post_image)
         return render(request, 'Home/detailpost.html', {'reply_form': cmreplyform, 'comments': comments, 'commentform': form, 'posts': publishedpost})
 
     @method_decorator(login_required)
@@ -54,10 +55,11 @@ class NewPostView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         return render(request, 'Home/Newpost.html', {'form': self.form})
     def post(self,request, *args, **kwargs):
-        rform = self.form(request.POST)
+        rform = self.form(request.POST, request.FILES)
         if rform.is_valid():
             newpostdata = rform.save(commit=False)
             newpostdata.user = request.user
+            print(rform.cleaned_data['post_image'])
             newpostdata.slug = slugify(rform.cleaned_data['body'][:30])
             newpostdata.save()
             messages.error(request, 'Post Was Published :)', extra_tags='success')
